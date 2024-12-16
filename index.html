@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ball Box</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div id="container">
+        <div id="instructions">
+            <h1>Ball Box</h1>
+            <ul>
+                <li> there's a box within which there's a ball that you can control using the arrow keys. </li>
+                <li> game ends when ball touches box boundary. </li>
+                <li> there are weapon projections which when hits the ball, the ball becomes bigger (smaller projection = larger size increment). </li>
+            </ul>
+        </div>
+
+        <div id="game">
+            <div id="gameControls">
+                <button id="startGame" class="controlButton" onclick="main()">Start</button>
+                <div id="difficulty">
+                    <label for="difficultySlider">Difficulty: </label>
+                    <input type="range" id="difficultySlider" min="1" max="10" value="5">
+                </div>
+            </div>
+            <canvas id="gameCanvas"></canvas>
+        </div>
+    </div>
+</body>
+
+<script type="module" src="./dist/index.js"></script>
+</html>

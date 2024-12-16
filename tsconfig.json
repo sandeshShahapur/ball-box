@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "rootDir": "./src",
+        "target": "es6",
+        "module": "ESNext",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "outDir": "./dist",
+    },
+    "include": [
+        "**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/*.spec.ts"
+    ]
+}
