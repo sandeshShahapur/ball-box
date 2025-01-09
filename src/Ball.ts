@@ -1,5 +1,5 @@
 import { InputHandler } from "./InputHandler.js";
-import { Weapon } from "./weapon.js";
+import { Weapon } from "./Weapon.js";
 
 export class Ball {
     private radius: number;

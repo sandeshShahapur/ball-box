@@ -1,6 +1,6 @@
 import { Ball } from "./Ball.js";
 import { InputHandler } from "./InputHandler.js";
-import { Weapon } from "./weapon.js";
+import { Weapon } from "./Weapon.js";
 
 export class Game {
     canvas: HTMLCanvasElement;
@@ -53,10 +53,13 @@ export class Game {
         for (let weapon of this.weapons) weapon.move();
 
         this.weapons = this.weapons.filter(weapon => {
+            if (weapon.isTrajectoryComplete(this.canvas)) return false;
+
             if (weapon.hasCollidedWithBall(this.ball.getX(), this.ball.getY(), this.ball.getRadius())) {
                 this.ball.handleCollisionWithWeapon(weapon);
                 return false;
             }
+
             return true;
         })
 
