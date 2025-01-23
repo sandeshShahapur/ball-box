@@ -1,6 +1,6 @@
 import { Ball } from "./Ball.js";
 import { InputHandler } from "./InputHandler.js";
-import { Weapon } from "./weapon.js";
+import { Weapon } from "./Weapon.js";
 export class Game {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
@@ -21,13 +21,15 @@ export class Game {
         if (!this.running)
             return;
         if (Math.random() < this.difficulty / 100) {
-            this.weapons.push(new Weapon(this.canvas));
+            this.weapons.push(new Weapon(this.ctx));
         }
         this.ball.move(this.canvas, this.inputHandler);
         for (let weapon of this.weapons)
             weapon.move();
         this.weapons = this.weapons.filter(weapon => {
-            if (weapon.hasCollidedWithBall(this.ball.getX(), this.ball.getY(), this.ball.getRadius())) {
+            if (weapon.isTrajectoryComplete(this.canvas))
+                return false;
+            if (weapon.hasCollidedWithBall(this.ball)) {
                 this.ball.handleCollisionWithWeapon(weapon);
                 return false;
             }

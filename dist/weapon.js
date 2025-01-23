@@ -1,30 +1,45 @@
+import { Utils } from "./Utils.js";
 export class Weapon {
+    constructor(ctx) {
+        let size = Math.floor(Math.random() * 20) + 10;
+        this.font = `${size}px ${Utils.randomFont()}`;
+        this.letter = Utils.randomChar();
+        this.color = Utils.randomHexColor();
+        ctx.font = this.font;
+        ctx.fillStyle = this.color;
+        let metrics = ctx.measureText(this.letter);
+        this.width = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
+        this.height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+        this.startingLoc = Weapon.randomStartingLoc();
+        [this.x, this.y, this.dx, this.dy] = this.randomTrajectory(this.startingLoc, ctx.canvas);
+        this.speed = Math.floor(Math.random() * 2) + 1;
+    }
     static randomStartingLoc() {
         return Weapon.startingLocs[Math.floor(Math.random() * Weapon.startingLocs.length)];
     }
-    static randomTrajectory(weaponSize, startingLoc, canvas) {
+    randomTrajectory(startingLoc, canvas) {
         let x, y, dx, dy;
         switch (startingLoc) {
             case "top":
                 x = Math.floor(Math.random() * canvas.width);
-                y = 0 - weaponSize;
+                y = 0 - this.height;
                 dx = (Math.random() * 2) - 1;
                 dy = Math.random();
                 break;
             case "bottom":
                 x = Math.floor(Math.random() * canvas.width);
-                y = canvas.height + weaponSize;
+                y = canvas.height;
                 dx = (Math.random() * 2) - 1;
                 dy = -Math.random();
                 break;
             case "left":
-                x = 0 - weaponSize;
+                x = 0 - this.width;
                 y = Math.floor(Math.random() * canvas.height);
                 dx = Math.random();
                 dy = (Math.random() * 2) - 1;
                 break;
             case "right":
-                x = canvas.width + weaponSize;
+                x = canvas.width;
                 y = Math.floor(Math.random() * canvas.height);
                 dx = -Math.random();
                 dy = (Math.random() * 2) - 1;
@@ -32,27 +47,8 @@ export class Weapon {
         }
         return [x, y, dx, dy];
     }
-    static randomFont() {
-        const fonts = ["Arial", "Verdana", "Helvetica", "Tahoma", "Trebuchet MS", "Times New Roman", "Georgia", "Garamond", "Courier New", "Brush Script MT"];
-        return fonts[Math.floor(Math.random() * fonts.length)];
-    }
-    static randomChar() {
-        return String.fromCharCode(65 + Math.floor(Math.random() * 26));
-    }
-    static randomHexColor() {
-        return "#" + Math.floor(Math.random() * 16777215).toString(16);
-    }
-    constructor(canvas) {
-        this.size = Math.floor(Math.random() * 20) + 10;
-        this.startingLoc = Weapon.randomStartingLoc();
-        [this.x, this.y, this.dx, this.dy] = Weapon.randomTrajectory(this.size, this.startingLoc, canvas);
-        this.speed = Math.floor(Math.random() * 2) + 1;
-        this.font = `${this.size}px ${Weapon.randomFont()}`;
-        this.letter = Weapon.randomChar();
-        this.color = Weapon.randomHexColor();
-    }
     getSize() {
-        return this.size;
+        return this.width + this.height / 2;
     }
     draw(ctx) {
         ctx.font = this.font;
@@ -63,27 +59,36 @@ export class Weapon {
         this.x += this.dx * this.speed;
         this.y += this.dy * this.speed;
     }
-    hasCollidedWithBall(ballX, ballY, ballRadius) {
-        return Math.sqrt(Math.pow((this.x - ballX), 2) + Math.pow((this.y - ballY), 2)) < this.size + ballRadius;
+    hasCollidedWithBall(ball) {
+        const centersDiffX = Math.abs(ball.getX() - this.x - this.width / 2);
+        const centersDiffY = Math.abs(ball.getY() - this.y - this.height / 2);
+        if (centersDiffX > (this.width / 2 + ball.getRadius()))
+            return false;
+        if (centersDiffY > (this.height / 2 + ball.getRadius()))
+            return false;
+        if (centersDiffX <= this.width / 2)
+            return true;
+        if (centersDiffY <= this.height / 2)
+            return true;
+        const cornerDistanceSq = Math.pow((centersDiffX - this.width / 2), 2) + Math.pow((centersDiffY - this.height / 2), 2);
+        return cornerDistanceSq <= Math.pow(ball.getRadius(), 2);
     }
     isOutOfBounds(canvas) {
-        return (this.x < 0 - this.size ||
-            this.x > canvas.width + this.size ||
-            this.y < 0 - this.size ||
-            this.y > canvas.height + this.size);
+        return (this.x + this.width < 0 ||
+            this.x > canvas.width ||
+            this.y + this.height < 0 ||
+            this.y > canvas.height);
     }
     isTrajectoryComplete(canvas) {
-        if (!this.isOutOfBounds(canvas))
-            return false;
         switch (this.startingLoc) {
             case "top":
-                return this.y > 0 + this.size;
+                return this.y > canvas.height;
             case "bottom":
-                return this.y < canvas.height - this.size;
+                return this.y + this.height < 0;
             case "left":
-                return this.x > 0 + this.size;
+                return this.x > canvas.width;
             case "right":
-                return this.x < canvas.width - this.size;
+                return this.x + this.width < 0;
         }
     }
 }

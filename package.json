@@ -1,0 +1,14 @@
+{
+  "name": "ball_box",
+  "version": "1.0.0",
+  "description": "My first game",
+  "main": "dist/index.js",
+  "type": "module",
+
+  "scripts": {
+    "start": "node dist/index.js"
+  },
+
+  "author": "Sandesh Shahapur",
+  "license": "MIT"
+}
