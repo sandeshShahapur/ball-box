@@ -18,6 +18,7 @@ export class Game {
     constructor(canvasId: string) {
         this.canvas = document.getElementById(canvasId) as HTMLCanvasElement;
         this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+        this.ctx.textBaseline = "top";
 
         this.running = false;
         this.animationFrameId = null;

@@ -5,6 +5,7 @@ export class Game {
     constructor(canvasId) {
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext("2d");
+        this.ctx.textBaseline = "top";
         this.running = false;
         this.animationFrameId = null;
         this.inputHandler = new InputHandler();
