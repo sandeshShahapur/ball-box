@@ -1,6 +1,6 @@
 class Utils {
     static randomFont(): string {
-        const fonts = ["Arial"]; //, "Verdana", "Helvetica", "Tahoma", "Trebuchet MS", "Times New Roman", "Georgia", "Garamond", "Courier New", "Brush Script MT"];
+        const fonts = ["Arial", "Verdana", "Helvetica", "Tahoma", "Trebuchet MS", "Times New Roman", "Georgia", "Garamond", "Courier New", "Brush Script MT"];
         return fonts[Math.floor(Math.random() * fonts.length)];
     }
 
