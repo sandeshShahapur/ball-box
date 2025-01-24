@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ball Box</title>
+    <title>Ball Box - Interactive Game</title>
+    <meta name="description" content="Ball Box is an interactive game where you control a ball using arrow or 'wsad' keys (JoyStick if mobile/tab). Avoid the box boundary and weapon projections to survive.">
+    <meta name="keywords" content="free online game, Ball Box, interactive game, arrow keys, wsad keys, joystick, indie, game development">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
 </head>
@@ -16,20 +18,22 @@
             </a>
         </header>
 
-        <div id="instructions">
-            <div id="instructionsList"> <ul>
-                <li>Use arrow or 'wsad' keys to control the ball.</li>
-                <li>The game ends if the ball touches the box boundary.</li>
-                <li>Weapon projections (shaped as characters) increase the ball size upon collision. Smaller projections cause larger size increments.</li>
-            </ul> </div>
+        <section id="instructions">
+            <div id="instructionsList">
+                <ul>
+                    <li>Use arrow or 'wsad' keys to control the ball (JoyStick if mobile/tab).</li>
+                    <li>The game ends if the ball touches the box boundary.</li>
+                    <li>Avoid the weapon projections (shaped as characters) that increases the ball size upon collision. Smaller projections cause larger size increments.</li>
+                </ul>
+            </div>
             <picture>
                 <source media="(max-width: 767px)" srcset="./assets/jstick_demo.gif" width="300px">
-                <source media="(min-width: 768px)" srcset="./assets/arrow-keys-and-wasd-keys.jpg">
-                <img id="instructionsKeys" src="./assets/arrow-keys-and-wasd-keys.jpg" alt="Move Keys" width="500px" height="200px">
+                <source media="(min-width: 768px)" srcset="./assets/arrow-keys-and-wasd-keys.jpg" width="500px" height="200px">
+                <img id="instructionsKeys" src="./assets/arrow-keys-and-wasd-keys.jpg" alt="Control instructions for the ball">
             </picture>
-        </div>
+        </section>
 
-        <div id="game">
+        <section id="game">
             <div id="gameControls">
                 <button id="startGame" class="controlButton" onclick="main()">Start Game</button>
                 <div id="difficulty">
@@ -38,7 +42,7 @@
                 </div>
             </div>
             <canvas id="gameCanvas"></canvas>
-        </div>
+        </section>
 
         <div id="joyStickContainer" style="display: none;">
             <div id="joyStickRing">
@@ -48,9 +52,9 @@
     </div>
 
     <footer>
-        <p>© 2025 Sandesh Shahapur <a href="http://creativecommons.org/licenses/by/4.0/legalcode">CC-BY-4.0</a> </p>
+        <p>© 2025 Sandesh Shahapur <a href="http://creativecommons.org/licenses/by/4.0/legalcode">CC-BY-4.0</a></p>
     </footer>
-</body>
 
-<script type="module" src="./dist/index.js"></script>
+    <script type="module" src="./dist/index.js"></script>
+</body>
 </html>
