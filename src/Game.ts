@@ -25,16 +25,21 @@ export class Game {
 
         this.inputHandler = new InputHandler();
 
-        this.difficultySlider = document.getElementById("difficultySlider") as HTMLSelectElement;
+        this.difficultySlider = document.getElementById(
+            "difficultySlider"
+        ) as HTMLSelectElement;
         this.difficulty = parseInt(this.difficultySlider.value);
-        this.difficultySlider.addEventListener("input", () => this.difficulty = parseInt(this.difficultySlider.value));
+        this.difficultySlider.addEventListener(
+            "input",
+            () => (this.difficulty = parseInt(this.difficultySlider.value))
+        );
 
         this.ball = new Ball(
             this.canvas.width / 2,
             this.canvas.height / 2,
             2,
             2,
-            this.difficulty * 2,
+            this.difficulty * 2
         );
         this.weapons = [];
     }
@@ -53,7 +58,7 @@ export class Game {
         this.ball.move(this.canvas, this.inputHandler);
         for (let weapon of this.weapons) weapon.move();
 
-        this.weapons = this.weapons.filter(weapon => {
+        this.weapons = this.weapons.filter((weapon) => {
             if (weapon.isTrajectoryComplete(this.canvas)) return false;
 
             if (weapon.hasCollidedWithBall(this.ball)) {
@@ -62,7 +67,7 @@ export class Game {
             }
 
             return true;
-        })
+        });
 
         this.clearCanvas();
         this.ball.draw(this.ctx);
@@ -70,7 +75,9 @@ export class Game {
 
         // if ball is colliding with wall, game over
         if (this.ball.isCollidingWithWall(this.canvas)) {
-            this.animationFrameId = requestAnimationFrame(() => this.gameOver());
+            this.animationFrameId = requestAnimationFrame(() =>
+                this.gameOver()
+            );
             return;
         }
 
@@ -81,11 +88,13 @@ export class Game {
          *   1. It only executes as many times as the browser can repaint the screen (typically 60hz)
          *      instead of executing as fast is it can thus saving unnecessary work
          *   2. It is executed in the optimal time for the browser, typically before the next repaint
-        */
+         */
         this.animationFrameId = requestAnimationFrame(() => this.gameLoop());
     }
 
     start() {
+        this.clearCanvas();
+        
         this.running = true;
         this.gameLoop();
     }
@@ -95,14 +104,14 @@ export class Game {
         if (modal) modal.remove();
 
         this.clearCanvas();
-        this.inputHandler.reset();
+        this.inputHandler.resetKeys();
         //TODO DRY
         this.ball = new Ball(
             this.canvas.width / 2,
             this.canvas.height / 2,
             2,
             2,
-            this.difficulty * 2,
+            this.difficulty * 2
         );
         this.weapons = [];
         this.start();
@@ -118,7 +127,9 @@ export class Game {
                 <button class="controlButton">Restart</button>
             </div>
         `;
-        modal.querySelector(".controlButton").addEventListener("click", this.restartGame.bind(this));
+        modal
+            .querySelector(".controlButton")
+            .addEventListener("click", this.restartGame.bind(this));
 
         document.body.appendChild(modal);
     }

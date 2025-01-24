@@ -1,58 +1,126 @@
+/* Reset and base styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-#container {
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    min-height: 100vh;
+}
+
+
+#container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    height: 100vh;
-    padding: 20px 0px;
+    padding: 20px;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 20px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #1d4ed8;
+}
+
+#githubButton {
+    display: inline-block;
+    text-decoration: none;
+}
+#githubButton img {
+    height: 20px;
+    vertical-align: middle;
 }
 
 #instructions {
-    align-self: flex-start;
-    margin-left: 20px;
+    width: 90%;
+    margin-bottom: 30px;
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+#instructionsList {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex: 1 0 280px;
+    text-align: left;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#instructionsList ul {
+    list-style: disc;
+    padding-left: 20px;
+}
+
+#instructionsList li {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+#instructionsKeys {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    flex: 1;
 }
 
 #game {
     width: 100%;
-    margin-bottom: 10vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 20px;
 }
 
 #gameControls {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
+    align-items: center;
+    gap: 15px;
 }
 
 #difficulty {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 10px;
 }
 
+#difficultySlider {
+    accent-color: #1d4ed8;
+}
+
 #gameCanvas {
-    width: 70%;
-    margin: 0 auto;
-    display: block;
-    border: 3px solid black;
-    box-sizing: border-box;
+    width: 80%;
+    max-width: 700px;
+    aspect-ratio: 16 / 9;
+    background: #ffffff;
+    border: 3px solid #1d4ed8;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .fsModal {
+    z-index: 999;
     width: 100%;
     height: 100%;
     position: fixed;
@@ -82,11 +150,65 @@
 }
 
 .controlButton {
-    padding: 10px 20px;
-    font-size: 1.5em;
-    background-color: #4CAF50;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: 500;
+    background-color: #1d4ed8;
     color: white;
     border: none;
+    border-radius: 10px;
     cursor: pointer;
-    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.controlButton:hover {
+    background-color: #2563eb;
+    transform: scale(1.05);
+}
+
+#joyStickContainer {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#joyStickRing {
+    width: 120px;
+    height: 120px;
+    border: 3px solid black;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#joyStickBall {
+    position: relative;
+    z-index: 999;
+    width: 100px;
+    height: 100px;
+    border: 1.5px solid black;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    background-image: url("./assets/dirs_UDLR.png");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 0.9em;
+    color: #555;
+    text-align: center;
 }
