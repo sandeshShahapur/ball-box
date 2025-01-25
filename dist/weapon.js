@@ -44,6 +44,8 @@ export class Weapon {
                 dx = -Math.random();
                 dy = (Math.random() * 2) - 1;
                 break;
+            default:
+                throw new Error("Invalid starting location");
         }
         return [x, y, dx, dy];
     }
@@ -89,6 +91,8 @@ export class Weapon {
                 return this.x > canvas.width;
             case "right":
                 return this.x + this.width < 0;
+            default:
+                throw new Error("Invalid starting location");
         }
     }
 }

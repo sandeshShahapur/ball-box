@@ -4,7 +4,7 @@ import { Utils } from "./Utils.js";
 export class InputHandler {
     private keys: Record<string, boolean>;
     private altKeys: Record<string, string>;
-    private joystick: Joystick;
+    private joystick: Joystick | undefined;
 
     constructor() {
         this.keys = {

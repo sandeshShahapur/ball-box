@@ -70,9 +70,9 @@ export class Game {
                 <button class="controlButton">Restart</button>
             </div>
         `;
-        modal
-            .querySelector(".controlButton")
-            .addEventListener("click", this.restartGame.bind(this));
+        const controlButton = modal.querySelector(".controlButton");
+        if (controlButton)
+            controlButton.addEventListener("click", this.restartGame.bind(this));
         document.body.appendChild(modal);
     }
     stop() {
