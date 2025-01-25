@@ -1,6 +1,6 @@
-import { Ball } from "./Ball.js";
-import { InputHandler } from "./InputHandler.js";
-import { Weapon } from "./Weapon.js";
+import { Ball } from "../components/Ball";
+import { InputHandler } from "../input/InputHandler";
+import { Weapon } from "../components/Weapon";
 
 export class Game {
     canvas: HTMLCanvasElement;
@@ -129,7 +129,11 @@ export class Game {
         `;
 
         const controlButton = modal.querySelector(".controlButton");
-        if (controlButton) controlButton.addEventListener("click", this.restartGame.bind(this));
+        if (controlButton)
+            controlButton.addEventListener(
+                "click",
+                this.restartGame.bind(this)
+            );
 
         document.body.appendChild(modal);
     }

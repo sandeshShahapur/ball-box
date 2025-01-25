@@ -1,5 +1,5 @@
-import { Utils } from "./Utils.js";
-import { Ball } from "./Ball.js";
+import { Utils } from "../core/Utils";
+import { Ball } from "./Ball";
 
 export class Weapon {
     private static startingLocs: string[] = ["top", "bottom", "left", "right"];
@@ -27,34 +27,43 @@ export class Weapon {
         ctx.fillStyle = this.color;
         let metrics = ctx.measureText(this.letter);
 
-        this.width = metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
-        this.height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
-
+        this.width =
+            metrics.actualBoundingBoxLeft + metrics.actualBoundingBoxRight;
+        this.height =
+            metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
 
         this.startingLoc = Weapon.randomStartingLoc();
-        [this.x, this.y, this.dx, this.dy] = this.randomTrajectory(this.startingLoc, ctx.canvas);
+        [this.x, this.y, this.dx, this.dy] = this.randomTrajectory(
+            this.startingLoc,
+            ctx.canvas
+        );
 
         this.speed = Math.floor(Math.random() * 2) + 1; // [1, 3)
     }
 
     public static randomStartingLoc(): string {
-        return Weapon.startingLocs[Math.floor(Math.random() * Weapon.startingLocs.length)];
+        return Weapon.startingLocs[
+            Math.floor(Math.random() * Weapon.startingLocs.length)
+        ];
     }
 
-    public randomTrajectory(startingLoc: string, canvas: HTMLCanvasElement): [number, number, number, number] {
+    public randomTrajectory(
+        startingLoc: string,
+        canvas: HTMLCanvasElement
+    ): [number, number, number, number] {
         let x: number, y: number, dx: number, dy: number;
         switch (startingLoc) {
             case "top":
                 x = Math.floor(Math.random() * canvas.width);
                 y = 0 - this.height;
-                dx = (Math.random() * 2) - 1;
+                dx = Math.random() * 2 - 1;
                 dy = Math.random();
                 break;
 
             case "bottom":
                 x = Math.floor(Math.random() * canvas.width);
                 y = canvas.height;
-                dx = (Math.random() * 2) - 1;
+                dx = Math.random() * 2 - 1;
                 dy = -Math.random();
                 break;
 
@@ -62,14 +71,14 @@ export class Weapon {
                 x = 0 - this.width;
                 y = Math.floor(Math.random() * canvas.height);
                 dx = Math.random();
-                dy = (Math.random() * 2) - 1;
+                dy = Math.random() * 2 - 1;
                 break;
 
             case "right":
                 x = canvas.width;
                 y = Math.floor(Math.random() * canvas.height);
                 dx = -Math.random();
-                dy = (Math.random() * 2) - 1;
+                dy = Math.random() * 2 - 1;
                 break;
 
             default:
@@ -80,7 +89,7 @@ export class Weapon {
     }
 
     getSize(): number {
-        return this.width + this.height/2;
+        return this.width + this.height / 2;
     }
 
     draw(ctx: CanvasRenderingContext2D) {
@@ -98,13 +107,15 @@ export class Weapon {
         const centersDiffX = Math.abs(ball.getX() - this.x - this.width / 2);
         const centersDiffY = Math.abs(ball.getY() - this.y - this.height / 2);
 
-        if (centersDiffX > (this.width / 2 + ball.getRadius())) return false;
-        if (centersDiffY > (this.height / 2 + ball.getRadius())) return false;
+        if (centersDiffX > this.width / 2 + ball.getRadius()) return false;
+        if (centersDiffY > this.height / 2 + ball.getRadius()) return false;
 
         if (centersDiffX <= this.width / 2) return true;
         if (centersDiffY <= this.height / 2) return true;
 
-        const cornerDistanceSq = (centersDiffX - this.width / 2) ** 2 + (centersDiffY - this.height / 2) ** 2;
+        const cornerDistanceSq =
+            (centersDiffX - this.width / 2) ** 2 +
+            (centersDiffY - this.height / 2) ** 2;
         return cornerDistanceSq <= ball.getRadius() ** 2;
     }
 

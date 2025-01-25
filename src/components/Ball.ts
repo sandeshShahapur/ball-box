@@ -1,5 +1,5 @@
-import { InputHandler } from "./InputHandler.js";
-import { Weapon } from "./Weapon.js";
+import { InputHandler } from "../input/InputHandler";
+import { Weapon } from "./Weapon";
 
 export class Ball {
     private radius: number;
@@ -37,10 +37,14 @@ export class Ball {
     }
 
     move(canvas: HTMLCanvasElement, inputHandler: InputHandler): void {
-        if (inputHandler.isKeyPressed("ArrowUp")) this.y = Math.max(this.y - this.dy, this.radius);
-        if (inputHandler.isKeyPressed("ArrowDown")) this.y = Math.min(this.y + this.dy, canvas.height - this.radius);
-        if (inputHandler.isKeyPressed("ArrowLeft")) this.x = Math.max(this.x - this.dx, this.radius);
-        if (inputHandler.isKeyPressed("ArrowRight")) this.x = Math.min(this.x + this.dx, canvas.width - this.radius);
+        if (inputHandler.isKeyPressed("ArrowUp"))
+            this.y = Math.max(this.y - this.dy, this.radius);
+        if (inputHandler.isKeyPressed("ArrowDown"))
+            this.y = Math.min(this.y + this.dy, canvas.height - this.radius);
+        if (inputHandler.isKeyPressed("ArrowLeft"))
+            this.x = Math.max(this.x - this.dx, this.radius);
+        if (inputHandler.isKeyPressed("ArrowRight"))
+            this.x = Math.min(this.x + this.dx, canvas.width - this.radius);
     }
 
     handleCollisionWithWeapon(weapon: Weapon): void {
